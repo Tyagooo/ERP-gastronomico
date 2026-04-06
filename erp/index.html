@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>ERP Gastronómico</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<h1>ERP Gastronómico</h1>
+
+<!-- Menú de secciones -->
+<div id="menu">
+    <button onclick="mostrarSeccion('facturacion')">Facturación</button>
+    <button onclick="mostrarSeccion('historial')">Historial de facturas</button>
+    <button onclick="mostrarSeccion('inventario')">Inventario</button>
+    <button onclick="mostrarSeccion('resumenDia')">Resumen Diario</button>
+</div>
+
+<!-- SECCIÓN FACTURACIÓN -->
+<div id="facturacion">
+    <h2>Registrar Venta</h2>
+
+    <label>Producto:</label>
+    <select id="producto">
+        <optgroup label="Entradas">
+            <option value="Langostinos tempuras">Langostinos tempuras</option>
+            <option value="Guiozas">Guiozas</option>
+            <option value="Nigiris">Nigiris</option>
+            <option value="Egg Rolls">Egg Rolls</option>
+            <option value="Cevi Amazonico">Cevi Amazonico</option>
+            <option value="Aborrajados">Aborrajados</option>
+        </optgroup>
+
+        <optgroup label="Platos fuertes">
+            <option value="Colombia roll">Colombia roll</option>
+            <option value="Acevichado">Acevichado</option>
+            <option value="Buddha roll">Buddha roll</option>
+            <option value="Philadelfia">Philadelfia</option>
+            <option value="California">California</option>
+            <option value="Majiña acevichado">Majiña acevichado</option>
+            <option value="Black tiger">Black tiger</option>
+            <option value="Tiger eyes">Tiger eyes</option>
+            <option value="Tentation roll">Tentation roll</option>
+            <option value="Kurashi">Kurashi</option>
+            <option value="Ceviche colombiano">Ceviche colombiano</option>
+            <option value="Ceviche de la casa">Ceviche de la casa</option>
+            <option value="Ceviche peruano">Ceviche peruano</option>
+            <option value="Ceviantojo">Ceviantojo</option>
+            <option value="Baby beef">Baby beef</option>
+            <option value="Churrasco">Churrasco</option>
+            <option value="Punta de anca">Punta de anca</option>
+            <option value="Big chorizo">Big chorizo</option>
+            <option value="Ribeye">Ribeye</option>
+            <option value="Arroz de maricos">Arroz de maricos</option>
+            <option value="Arroz ranchero">Arroz ranchero</option>
+            <option value="Lomo salteado">Lomo salteado</option>
+            <option value="Yakisoba de lomo">Yakisoba de lomo</option>
+            <option value="Yakisoba de cerdo">Yakisoba de cerdo</option>
+            <option value="Yakisoba de pollo">Yakisoba de pollo</option>
+            <option value="Yakisoba de mariscos">Yakisoba de mariscos</option>
+        </optgroup>
+
+        <optgroup label="Bebidas">
+            <option value="Coca-cola">Coca-cola</option>
+            <option value="Cuatro">Cuatro</option>
+            <option value="Agua manantial">Agua manantial</option>
+            <option value="Jugos naturales">Jugos naturales</option>
+            <option value="Cerveza Corona">Cerveza Corona</option>
+            <option value="Club Colombia">Club Colombia</option>
+            <option value="Stella">Stella</option>
+            <option value="Sodas">Sodas</option>
+            <option value="Limonada de coco">Limonada de coco</option>
+            <option value="Limonada de hierva buena">Limonada de hierva buena</option>
+            <option value="Limonada de cereza">Limonada de cereza</option>
+        </optgroup>
+    </select>
+
+    <label>Cantidad:</label>
+    <input type="number" id="cantidad">
+
+    <button onclick="registrarVenta()">Registrar</button>
+
+    <h2>Ventas registradas</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="tablaVentas"></tbody>
+    </table>
+
+    <h3>Total de la cuenta: <span id="totalGeneral">$0</span></h3>
+    <p>Subtotal: <span id="subtotal">$0</span></p>
+    <p>IVA (19%): <span id="iva">$0</span></p>
+
+    <label>
+        <input type="checkbox" id="propinaCheck"> Incluir propina (10%)
+    </label>
+    <p>Propina: <span id="propina">$0</span></p>
+
+    <h2>Total final: <span id="totalFinal">$0</span></h2>
+
+    <div>
+        <button onclick="nuevaFactura()">Finalizar / Nueva Factura</button>
+        <button onclick="imprimirFactura()">Imprimir Factura</button>
+    </div>
+</div>
+
+<!-- SECCIÓN HISTORIAL -->
+<div id="historial" style="display:none;">
+    <h2>Historial de facturas</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>#Factura</th>
+                <th>Productos</th>
+                <th>Subtotal</th>
+                <th>IVA</th>
+                <th>Propina</th>
+                <th>Total Final</th>
+            </tr>
+        </thead>
+        <tbody id="historialFacturas"></tbody>
+    </table>
+</div>
+
+<div id="inventario" style="display:none;">
+    <h2>Inventario</h2>
+    <input 
+    type="text" 
+    id="buscadorInventario" 
+    placeholder="🔍 Buscar producto..."
+    onkeyup="filtrarInventario()"
+>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Unidad</th>
+                <th>Agregar/Eliminar Stock</th>
+            </tr>
+        </thead>
+        <tbody id="tablaInventario"></tbody>
+    </table>
+</div>
+<div id="resumenDia" style="display:none;">
+    <h2>Resumen Diario de Inventario</h2>
+    <input 
+    type="text" 
+    id="buscadorResumen" 
+    placeholder="🔍 Buscar producto..."
+    onkeyup="filtrarResumen()"
+>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Inicial</th>
+                <th>Vendido</th>
+                <th>Agregado</th>
+                <th>Unidad</th>
+            </tr>
+        </thead>
+        <tbody id="tablaResumen"></tbody>
+    </table>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

@@ -270,3 +270,12 @@ footer {
     align-items: center;
   }
 }
+
+.precio-card {
+  cursor: pointer; /* Indica que es clickeable */
+  transition: transform 0.2s;
+}
+
+.precio-card:hover {
+  transform: scale(1.05); /* efecto visual al pasar el mouse */
+}
