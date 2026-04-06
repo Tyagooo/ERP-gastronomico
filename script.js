@@ -3,7 +3,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
   alert("¡Gracias por contactarnos! Nos pondremos en contacto pronto.");
 });
 
-// Plan Básico ✅
+// Plan Básico 
 document.getElementById("basicoPlan").addEventListener("click", () => {
     const a = document.createElement("a");
     a.href = "sazonERP_basico.zip";

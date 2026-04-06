@@ -8,7 +8,7 @@ let eliminadosDelDia = {};
 
 let recetas = {
 
-    // 🥢 ENTRADAS
+    // Entradas
     "Langostinos tempuras": {
         "Langostino": 35
     },
@@ -44,7 +44,7 @@ let recetas = {
         "Bocadillo": 60
     },
 
-    // 🍣 SUSHI
+    // Sushi
     "Colombia roll": {
         "Arroz sushi": 120,
         "Alga nori": 1,
@@ -130,7 +130,7 @@ let recetas = {
         "Palmito de cangrejo": 15
     },
 
-    // 🥗 CEVICHES
+    // Ceviches
     "Ceviche colombiano": {
         "Camaron": 240,
         "Salsa de tomate": 60,
@@ -177,7 +177,7 @@ let recetas = {
         "Mayonesa japonesa": 35
     },
 
-    // 🥩 CARNES
+    // Carnes
     "Baby beef": {
         "Baby beef": 1,
         "Papas fritas": 150
@@ -203,7 +203,7 @@ let recetas = {
         "Papas fritas": 150
     },
 
-    // 🍛 ARROCES Y WOK
+    // Arroces
     "Arroz de maricos": {
         "Arroz": 150,
         "Mariscos": 150,
@@ -265,7 +265,7 @@ let recetas = {
         "Zucchini": 30
     },
 
-    // 🥤 BEBIDAS
+    // Bebidas
     "Coca-cola": { "Coca-cola": 1 },
     "Cuatro": { "Cuatro": 1 },
     "Agua manantial": { "Agua": 1 },
@@ -376,19 +376,19 @@ let inventario = {
     "Pollo": 2000,
     "Mariscos": 1500,
 
-    // 🥩 CARNES (unidades)
+    // Carnes (unidades)
     "Baby beef": 10,
     "Churrasco": 10,
     "Big chorizo": 10,
     "Punta de anca": 10,
     "Ribeye": 10,
 
-    // 🍚 BASES (gramos)
+    // Bases (gramos)
     "Arroz sushi": 10000,
     "Arroz": 4000,
     "Pasta": 3000,
 
-    // 🥬 VEGETALES (gramos)
+    // Vegetales (gramos)
     "Cebolla": 1000,
     "Cebollin": 200,
     "Cilantro": 200,
@@ -399,7 +399,7 @@ let inventario = {
     "Maiz": 500,
     "Limon": 3000,
 
-    // 🧂 OTROS (gramos)
+    // Otros (gramos)
     "Palmito de cangrejo": 2000,
     "Queso": 100,
     "Bocadillo": 100,
@@ -410,12 +410,12 @@ let inventario = {
     "Poppings pearls": 3000,
     "Papas fritas": 3000,
 
-    // 🍞 / MASAS (unidades)
+    // Masas (unidades)
     "Masa gyoza": 200,
     "Egg roll": 150,
     "Alga nori": 600,
 
-    // 🥤 BEBIDAS (unidades)
+    // Bebidas (unidades)
     "Coca-cola": 75,
     "Cuatro": 25,
     "Agua": 50,
@@ -424,14 +424,14 @@ let inventario = {
     "Club Colombia": 30,
     "Stella": 30,
 
-    // 🧃 LÍQUIDOS (ml)
+    // Liquidos (ml)
     "Sirope sodas": 2000,
     "Sirope coco": 1000,
     "Sirope hierbabuena": 1000,
     "Sirope cereza": 1000,
     "Leche": 2000
 };
-// 🔥 CARGAR INVENTARIO GUARDADO
+// Cargar inventario
 let inventarioGuardado = localStorage.getItem("inventario");
 
 if (inventarioGuardado) {
@@ -527,7 +527,6 @@ function registrarVenta() {
 
     if(cantidad <= 0) return alert("Cantidad debe ser mayor a 0");
 
-    // ✅ AQUI VA ESTO
     if(!ajustarInventario(producto, cantidad, "restar")) return;
 
     let precio = precios[producto];
@@ -748,7 +747,6 @@ function mostrarSeccion(seccion) {
     // Mostrar solo la seleccionada
     document.getElementById(seccion).style.display = "block";
 
-    // Opcional: si quieres cargar datos al abrir sección
     if (seccion === "inventario") mostrarInventario();
     if (seccion === "resumenDia") mostrarResumenDia();
 }
@@ -806,7 +804,9 @@ function eliminarStock(nombre) {
     }
 
     inventario[nombre] -= cantidad;
-    // ✅ Registrar eliminado del día
+   
+    // Registrar eliminado del día
+
 if(!eliminadosDelDia[nombre]) eliminadosDelDia[nombre] = 0;
 eliminadosDelDia[nombre] += cantidad;
     localStorage.setItem("inventario", JSON.stringify(inventario));
@@ -846,7 +846,7 @@ function actualizarResumen() {
     let tablaResumen = document.getElementById("tablaResumen");
     tablaResumen.innerHTML = ""; // limpiar tabla
 
-    // Recorremos todos los productos del inventario
+    
     for (let producto in inventario) {
         let inicial = inventarioInicial[producto] || 0;            // Stock inicial
         let vendido = ventasDelDia[producto] || 0;                 // Cantidad vendida
