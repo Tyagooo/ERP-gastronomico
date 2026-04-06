@@ -4,6 +4,7 @@ let totalGeneral = 0;
 let historial = [];
 
 let agregadosDelDia = {}; // guarda lo agregado por producto
+let eliminadosDelDia = {};
 
 let recetas = {
 
@@ -805,6 +806,9 @@ function eliminarStock(nombre) {
     }
 
     inventario[nombre] -= cantidad;
+    // ✅ Registrar eliminado del día
+if(!eliminadosDelDia[nombre]) eliminadosDelDia[nombre] = 0;
+eliminadosDelDia[nombre] += cantidad;
     localStorage.setItem("inventario", JSON.stringify(inventario));
     input.value = "";
     mostrarInventario();
@@ -815,11 +819,16 @@ let inventarioInicial = JSON.parse(JSON.stringify(inventario)); // copia profund
 function mostrarResumenDia() {
     let tbody = document.getElementById("tablaResumen");
     tbody.innerHTML = "";
+
     for (let producto in inventario) {
         let inicial = inventarioInicial[producto] || 0;
         let final = inventario[producto];
-        let vendido = inicial - final + (agregadosDelDia[producto] || 0); // ajusta vendido considerando agregado
-        let agregado = agregadosDelDia[producto] || 0;
+
+        let agregadoBruto = agregadosDelDia[producto] || 0;
+        let eliminado = eliminadosDelDia[producto] || 0;
+
+        let agregado = agregadoBruto - eliminado;
+        let vendido = inicial + agregado - final;
 
         tbody.innerHTML += `
         <tr>
